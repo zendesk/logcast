@@ -1,3 +1,4 @@
 module Logcast
-  autoload :Broadcaster, 'lib/logcast/broadcaster.rb'
+  autoload :Broadcaster, 'logcast/broadcaster.rb'
+  autoload :Broadcast, 'logcast/broadcast.rb'
 end
