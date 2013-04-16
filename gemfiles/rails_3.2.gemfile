@@ -3,6 +3,7 @@
 source "https://rubygems.org"
 
 gem "appraisal", "~> 0.5", :group=>:test
+gem "debugger", :group=>:test
 gem "rails", "~> 3.2.0"
 
 gemspec :path=>"../"

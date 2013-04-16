@@ -1,8 +1,6 @@
-require 'logger'
-
 class Logcast::Broadcaster
-  def initialize(*subscribers)
-    subscribers.each {|log| subscribe(log)}
+  def initialize(*init)
+    init.each {|s| subscribe(s)}
   end
 
   def subscribe(subscriber)
@@ -10,7 +8,7 @@ class Logcast::Broadcaster
   end
 
   def subscribers
-    Thread.main[:logcast_subscribers] ||= []
+    @subscribers ||= []
   end
 
   def add(*args)
