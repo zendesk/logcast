@@ -16,7 +16,11 @@ class Logcast::Broadcaster
   # Rails 2
   def write(*args)
     logs.each do |log|
-      log.write(*args)
+      if log.respond_to?(:write)
+        log.write(*args)
+      else
+        log << *args
+      end
     end
   end
 
