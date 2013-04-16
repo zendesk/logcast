@@ -1,13 +1,25 @@
-## Rails LogCast
+## Logcast
 
-Rails Log Broadcaster for v2.3 -> v3.2
+Log Broadcaster with support for Rails v2.3 -> v3.2
 
 ## Usage
 
-### Initialize
+### Rails
 
 ```ruby
-require "logcast/rails"
+require 'logcast/rails'
+
+Rails.logger.subscribe(Logger.new(STDERR))
+```
+
+### Ruby
+
+```ruby
+require 'logcast'
+broadcaster = Logcast::Broadcaster.new(STDOUT)
+broadcaster.subscribe(Logger.new(STDERR))
+
+broadcast.info("Hi!")
 ```
 
 ## Copyright and license

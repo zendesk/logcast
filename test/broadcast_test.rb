@@ -4,8 +4,6 @@ require 'active_support'
 class RailsTest < Test::Unit::TestCase
   def setup
     @logger = ActiveSupport::BufferedLogger.new(STDERR)
-    @original_log = internal_log
-
     @logger.extend(Logcast::Broadcast)
   end
 
@@ -13,8 +11,8 @@ class RailsTest < Test::Unit::TestCase
     assert @logger.respond_to?(:subscribe)
   end
 
-  def test_original_log
-    assert_equal [@original_log], internal_log.subscribers
+  def test_subscribers
+    assert_equal [], internal_log.subscribers
   end
 
   def test_subscribe

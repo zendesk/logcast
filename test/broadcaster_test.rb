@@ -2,14 +2,7 @@ require 'test_helper'
 
 class BroadcasterTest < Test::Unit::TestCase
   def setup
-    @broadcaster = Logcast::Broadcaster.new
-  end
-
-  def test_setup
-    stub = Object.new
-
-    broadcaster = Logcast::Broadcaster.new(stub, stub)
-    assert_equal [stub], broadcaster.subscribers
+    @broadcaster = Logcast::Broadcaster.new("/dev/null")
   end
 
   def test_subscribe
@@ -30,8 +23,8 @@ class BroadcasterTest < Test::Unit::TestCase
     recorder = StringIO.new
 
     @broadcaster.subscribe(Logger.new(recorder))
-    @broadcaster.add(0, "hello", "myprog")
+    @broadcaster.info("hello")
 
-    assert_equal "hello\n", recorder.string
+    assert_match /hello\n$/, recorder.string
   end
 end

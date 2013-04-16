@@ -1,6 +1,15 @@
-class Logcast::Broadcaster
-  def initialize(*init)
-    init.each {|s| subscribe(s)}
+require 'logger'
+
+class Logcast::Broadcaster < ::Logger
+  def initialize(io, *args)
+    if io.is_a?(Logger)
+      @logdev = io.instance_variable_get(:@logdev)
+
+      self.level = io.level
+      self.formatter = io.formatter
+    else
+      super
+    end
   end
 
   def subscribe(subscriber)
@@ -12,6 +21,8 @@ class Logcast::Broadcaster
   end
 
   def add(*args)
+    super
+
     subscribers.each do |subscriber|
       subscriber.add(*args)
     end
