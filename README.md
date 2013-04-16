@@ -2,6 +2,21 @@
 
 Rails Log Broadcaster for v2.3 -> v3.2
 
+## Usage
+
+### Initialize
+
+```ruby
+require "rails_logcast"
+Rails.logger.extend(Logcast::Broadcast)
+```
+
+### Use
+
+```
+Rails.logger.broadcast(Logger.new(STDERR))
+```
+
 ## Copyright and license
 
 Copyright 2013 Zendesk
