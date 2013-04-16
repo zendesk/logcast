@@ -7,14 +7,7 @@ Rails Log Broadcaster for v2.3 -> v3.2
 ### Initialize
 
 ```ruby
-require "rails_logcast"
-Rails.logger.extend(Logcast::Broadcast)
-```
-
-### Use
-
-```
-Rails.logger.broadcast(Logger.new(STDERR))
+require "logcast/rails"
 ```
 
 ## Copyright and license

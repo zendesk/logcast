@@ -3,7 +3,7 @@ require 'rake/testtask'
 require 'bundler/gem_tasks'
 require 'appraisal'
 
-desc 'Test the rails_logcast plugin.'
+desc 'Test the logcast plugin.'
 Rake::TestTask.new do |t|
   t.libs << "test"
   t.pattern = "test/**/*_test.rb"
