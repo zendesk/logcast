@@ -1,8 +1,11 @@
 require 'logger'
 
-class Logcast::Broadcaster < ::Logger
+class Logcast::Broadcaster
+  def initialize(*logs)
+    logs.each {|log| broadcast(log)}
+  end
+
   def broadcast(log)
-    raise(ArgumentError, "Log does not respond to #add") unless log.respond_to?(:add)
     logs << log unless logs.include?(log)
   end
 
@@ -10,18 +13,35 @@ class Logcast::Broadcaster < ::Logger
     Thread.main[:logs] ||= []
   end
 
-  %w{add << close flush level= formatter= progname=}.each do |method|
-    define_method method do |*args, &block|
-      logs.each {|log| log.send(method, *args, &block)}
-      super(*args, &block)
+  # Rails 2
+  def write(*args)
+    logs.each do |log|
+      log.write(*args)
     end
   end
 
-  # IO-like
-  def path
-    @logdev.dev.path
+  # Rails 3
+  def add(*args)
+    logs.each do |log|
+      if log.respond_to?(:add)
+        log.add(*args)
+      else
+        log.write(args[1])
+      end
+    end
   end
 
-  # Needed for ActiveSupport::BufferedLogger's duck-typing check
-  alias :write :<<
+  def level=(x)
+    logs.each do |log|
+      t.level = x if t.respond_to?(:level=)
+    end
+  end
+
+  def level
+    logs.detect {|log| log.respond_to?(:level)}.try(:level)
+  end
+
+  def flush
+    logs.each(&:flush)
+  end
 end
