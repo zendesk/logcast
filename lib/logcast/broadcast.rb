@@ -5,8 +5,6 @@ module Logcast::Broadcast
   end
 
   def broadcast(*args)
-    if @log.respond_to?(:broadcast)
-      @log.broadcast(*args)
-    end
+    @log.broadcast(*args)
   end
 end
