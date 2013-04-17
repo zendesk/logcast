@@ -21,15 +21,15 @@ class Logcast::Broadcaster < ::Logger
     @subscribers ||= []
   end
 
-  # Add for all loggers
-  # Write for Rails 2.3 -> 3.1
-  %w{add write}.each do |method|
-    define_method method do |*args|
-      super(*args)
+  def add(*args)
+    super
 
-      subscribers.each do |subscriber|
-        subscriber.send(method, *args)
-      end
+    subscribers.each do |subscriber|
+      subscriber.add(*args)
     end
+  end
+
+  def write(msg)
+    add(level, msg, progname)
   end
 end
