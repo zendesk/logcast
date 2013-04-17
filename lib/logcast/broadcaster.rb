@@ -21,6 +21,7 @@ class Logcast::Broadcaster < ::Logger
     @subscribers ||= []
   end
 
+  # Rails 3
   def add(*args)
     super
 
@@ -29,6 +30,7 @@ class Logcast::Broadcaster < ::Logger
     end
   end
 
+  # Rails 2
   def write(msg)
     self << msg
 
