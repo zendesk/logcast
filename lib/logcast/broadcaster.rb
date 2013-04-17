@@ -30,6 +30,14 @@ class Logcast::Broadcaster < ::Logger
   end
 
   def write(msg)
-    add(level, msg, progname)
+    self << msg
+
+    subscribers.each do |subscriber|
+      if subscriber.respond_to?(:write)
+        subscriber.write(msg)
+      else
+        subscriber.add(level, msg, progname)
+      end
+    end
   end
 end
