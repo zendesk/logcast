@@ -27,4 +27,13 @@ class BroadcasterTest < Test::Unit::TestCase
 
     assert_match /hello\n$/, recorder.string
   end
+
+  def test_write
+    recorder = StringIO.new
+
+    @broadcaster.subscribe(Logger.new(recorder))
+    @broadcaster.write("hello")
+
+    assert_match /hello\n$/, recorder.string
+  end
 end

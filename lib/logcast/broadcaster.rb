@@ -7,6 +7,7 @@ class Logcast::Broadcaster < ::Logger
 
       self.level = io.level
       self.formatter = io.formatter
+      self.progname = io.progname
     else
       super
     end
@@ -26,5 +27,9 @@ class Logcast::Broadcaster < ::Logger
     subscribers.each do |subscriber|
       subscriber.add(*args)
     end
+  end
+
+  def write(msg)
+    add(level, msg, progname)
   end
 end
