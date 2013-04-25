@@ -4,7 +4,7 @@ module Logcast::Broadcast
     obj.instance_variable_set(:@log, Logcast::Broadcaster.new(current_log))
   end
 
-  def subscribe(*args)
-    @log.subscribe(*args)
+  def subscribe(*args, &block)
+    @log.subscribe(*args, &block)
   end
 end
