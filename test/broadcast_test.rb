@@ -1,26 +1,26 @@
-require 'test_helper'
+require File.expand_path('../test_helper', __FILE__)
 require 'active_support'
 
-class RailsTest < Test::Unit::TestCase
-  def setup
+describe "Broadcasting" do
+  before do
     @logger = ActiveSupport::BufferedLogger.new(STDERR)
     @logger.extend(Logcast::Broadcast)
   end
 
-  def test_respond_subscribe
+  it "responds to subscribe" do
     assert @logger.respond_to?(:subscribe)
   end
 
-  def test_subscribers
+  it "has subscribers" do
     assert_equal [], internal_log.subscribers
   end
 
-  def test_subscribe
+  it "can subscribe" do
     @logger.subscribe(@new_log = Object.new)
     assert_includes internal_log.subscribers, @new_log
   end
 
-  def test_broadcaster_instance
+  it "adds itself as logger instance" do
     assert_instance_of Logcast::Broadcaster, internal_log
   end
 
