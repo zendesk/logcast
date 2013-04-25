@@ -6,6 +6,7 @@ gem "minitest"
 gem "minitest-rg"
 gem "appraisal", "~> 0.5"
 gem "debugger"
+gem "bump"
 gem "rails", "~> 2.3.0"
 
 gemspec :path=>"../"
