@@ -1,16 +1,16 @@
-require 'test_helper'
+require File.expand_path('../test_helper', __FILE__)
 
-class BroadcasterTest < Test::Unit::TestCase
-  def setup
+describe Logcast::Broadcaster do
+  before do
     @broadcaster = Logcast::Broadcaster.new("/dev/null")
   end
 
-  def test_subscribe
+  it "subscribes" do
     @broadcaster.subscribe(stub = Object.new)
     assert_equal [stub], @broadcaster.subscribers
   end
 
-  def test_duplicate_subscribe
+  it "does not subscribe the same listener twice" do
     stub = Object.new
 
     @broadcaster.subscribe(stub)
@@ -19,7 +19,7 @@ class BroadcasterTest < Test::Unit::TestCase
     assert_equal [stub], @broadcaster.subscribers
   end
 
-  def test_add
+  it "logs via info" do
     recorder = StringIO.new
 
     @broadcaster.subscribe(Logger.new(recorder))
@@ -28,7 +28,7 @@ class BroadcasterTest < Test::Unit::TestCase
     assert_match /hello\n$/, recorder.string
   end
 
-  def test_write
+  it "logs via write" do
     recorder = StringIO.new
 
     @broadcaster.subscribe(Logger.new(recorder))

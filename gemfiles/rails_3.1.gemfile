@@ -2,8 +2,10 @@
 
 source "https://rubygems.org"
 
-gem "appraisal", "~> 0.5", :group=>:test
-gem "debugger", :group=>:test
+gem "minitest"
+gem "minitest-rg"
+gem "appraisal", "~> 0.5"
+gem "debugger"
 gem "rails", "~> 3.1.0"
 
 gemspec :path=>"../"

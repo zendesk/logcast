@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
 
   s.add_development_dependency "rake"
+  s.add_development_dependency "activesupport"
 
   s.files              = `git ls-files -x Gemfile.lock`.split("\n") rescue ''
   s.test_files         = `git ls-files -- {test,spec,features}/*`.split("\n")
