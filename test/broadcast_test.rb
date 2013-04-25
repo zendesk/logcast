@@ -2,13 +2,14 @@ require File.expand_path('../test_helper', __FILE__)
 require 'active_support'
 
 describe "Broadcasting" do
-  before do
-    @logger = ActiveSupport::BufferedLogger.new(STDERR)
-    @logger.extend(Logcast::Broadcast)
-  end
+  let(:logger){
+    logger = ActiveSupport::BufferedLogger.new(STDERR)
+    logger.extend(Logcast::Broadcast)
+    logger
+  }
 
   it "responds to subscribe" do
-    assert @logger.respond_to?(:subscribe)
+    assert logger.respond_to?(:subscribe)
   end
 
   it "has subscribers" do
@@ -16,8 +17,9 @@ describe "Broadcasting" do
   end
 
   it "can subscribe" do
-    @logger.subscribe(@new_log = Object.new)
-    assert_includes internal_log.subscribers, @new_log
+    new_log = Object.new
+    logger.subscribe(new_log)
+    assert_includes internal_log.subscribers, new_log
   end
 
   it "adds itself as logger instance" do
@@ -27,6 +29,6 @@ describe "Broadcasting" do
   private
 
   def internal_log
-    @logger.instance_variable_get(:@log)
+    logger.instance_variable_get(:@log)
   end
 end
