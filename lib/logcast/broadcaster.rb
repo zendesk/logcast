@@ -13,8 +13,21 @@ class Logcast::Broadcaster < ::Logger
     end
   end
 
-  def subscribe(subscriber)
-    subscribers << subscriber unless subscribers.include?(subscriber)
+  def subscribe(subscriber, &block)
+    if block
+      if subscribers.include?(subscriber)
+        yield
+      else
+        begin
+          subscribers << subscriber
+          yield
+        ensure
+          subscribers.pop
+        end
+      end
+    else
+      subscribers << subscriber unless subscribers.include?(subscriber)
+    end
   end
 
   def subscribers
