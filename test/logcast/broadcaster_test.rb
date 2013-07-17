@@ -2,26 +2,26 @@ require File.expand_path('../../test_helper', __FILE__)
 
 describe Logcast::Broadcaster do
   let(:broadcaster){ Logcast::Broadcaster.new("/dev/null") }
-  let(:stub){ Object.new }
+  let(:stub){ StringIO.new }
 
   describe "#subscribe" do
     it "subscribes" do
       broadcaster.subscribe(stub)
-      assert_equal [stub], broadcaster.subscribers
+      assert_equal [stub], subscribers(broadcaster)
     end
 
     it "does not subscribe the same listener twice" do
       broadcaster.subscribe(stub)
       broadcaster.subscribe(stub)
 
-      assert_equal [stub], broadcaster.subscribers
+      assert_equal [stub], subscribers(broadcaster)
     end
 
     it "can subscribe with a block" do
       broadcaster.subscribe(stub) do
-        assert_equal [stub], broadcaster.subscribers
+        assert_equal [stub], subscribers(broadcaster)
       end
-      assert_equal [], broadcaster.subscribers
+      assert_equal [], subscribers(broadcaster)
     end
 
     it "unsubscribe with a block on exception" do
@@ -30,7 +30,7 @@ describe Logcast::Broadcaster do
           raise ArgumentError.new
         end
       end
-      assert_equal [], broadcaster.subscribers
+      assert_equal [], subscribers(broadcaster)
     end
 
     it "exeutes a block if the subscriber is already subscribed" do
@@ -43,32 +43,44 @@ describe Logcast::Broadcaster do
     end
 
     it "can subscribe with multiple blocks" do
-      stub2 = Object.new
+      stub2 = StringIO.new
       broadcaster.subscribe(stub) do
         broadcaster.subscribe(stub2) do
-          assert_equal [stub, stub2], broadcaster.subscribers
+          assert_equal [stub, stub2], subscribers(broadcaster)
         end
-        assert_equal [stub], broadcaster.subscribers
+        assert_equal [stub], subscribers(broadcaster)
       end
-      assert_equal [], broadcaster.subscribers
+      assert_equal [], subscribers(broadcaster)
     end
   end
 
-  it "logs via info" do
-    recorder = StringIO.new
+  [:stringio, :logger, :buffered_logger].each do |type|
+    describe "logging to #{type}" do
+      let(:recorder) { StringIO.new }
+      let(:logger) do
+        case type
+        when :stringio then recorder
+        when :logger then Logger.new(recorder)
+        when :buffered_logger then ActiveSupport::BufferedLogger.new(recorder)
+        else raise "Unsupported #{type}"
+        end
+      end
 
-    broadcaster.subscribe(Logger.new(recorder))
-    broadcaster.info("hello")
+      it "logs via add" do
+        broadcaster.subscribe(logger)
+        broadcaster.add(1, "hello")
 
-    assert_match /hello\n$/, recorder.string
-  end
+        recorder.string.must_include "hello"
+        recorder.string.wont_include "\n\n"
+      end
 
-  it "logs via write" do
-    recorder = StringIO.new
+      it "logs via write" do
+        broadcaster.subscribe(logger)
+        broadcaster.write("hello\n")
 
-    broadcaster.subscribe(Logger.new(recorder))
-    broadcaster.write("hello")
-
-    assert_match /hello\n$/, recorder.string
+        recorder.string.must_include "hello"
+        recorder.string.wont_include "\n\n"
+      end
+    end
   end
 end
