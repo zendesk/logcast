@@ -14,8 +14,14 @@ class Logcast::Broadcaster < ::Logger
   end
 
   def subscribe(subscriber, &block)
+    unless subscriber.respond_to?(:add)
+      original_subscriber = subscriber
+      subscriber = Logger.new(subscriber)
+      subscriber.instance_variable_set(:@logcast_original_subscriber, original_subscriber)
+    end
+
     if block
-      if subscribers.include?(subscriber)
+      if already_subscribed?(subscriber)
         yield
       else
         begin
@@ -26,7 +32,7 @@ class Logcast::Broadcaster < ::Logger
         end
       end
     else
-      subscribers << subscriber unless subscribers.include?(subscriber)
+      subscribers << subscriber unless already_subscribed?(subscriber)
     end
   end
 
@@ -37,22 +43,22 @@ class Logcast::Broadcaster < ::Logger
   # Rails 3
   def add(*args)
     super
-
-    subscribers.each do |subscriber|
-      subscriber.add(*args)
-    end
+    subscribers.each { |subscriber| subscriber.add(*args) }
   end
 
   # Rails 2
   def write(msg)
     self << msg
+    subscribers.each { |subscriber| subscriber.add(level, msg.rstrip, progname) }
+  end
 
-    subscribers.each do |subscriber|
-      if subscriber.respond_to?(:write)
-        subscriber.write(msg)
-      else
-        subscriber.add(level, msg, progname)
-      end
-    end
+  private
+
+  def already_subscribed?(logger)
+    subscribers.map { |s| log_device(s) }.include?(log_device(logger))
+  end
+
+  def log_device(logger)
+    logger.instance_variable_get(:@logcast_original_subscriber) || logger
   end
 end
