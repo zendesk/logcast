@@ -10,7 +10,7 @@ Log Broadcaster with support for Rails v2.3 -> v3.2
 require 'logcast/rails'
 
 # mirror logging
-Rails.logger.subscribe(Logger.new(STDERR))
+Rails.logger.subscribe(Logger.new(STDERR)) # anything that responds to add or (write and close)
 
 # capture logging
 my_custom_stream = StringIO.new
