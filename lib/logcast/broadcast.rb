@@ -7,4 +7,8 @@ module Logcast::Broadcast
   def subscribe(*args, &block)
     @log.subscribe(*args, &block)
   end
+
+  def subscribers
+    @log.subscribers
+  end
 end
