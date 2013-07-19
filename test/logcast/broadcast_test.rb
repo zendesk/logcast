@@ -1,5 +1,4 @@
 require File.expand_path('../../test_helper', __FILE__)
-require 'active_support'
 
 describe "Broadcasting" do
   let(:logger){
@@ -13,13 +12,13 @@ describe "Broadcasting" do
   end
 
   it "has subscribers" do
-    assert_equal [], internal_log.subscribers
+    assert_equal [], subscribers(internal_log)
   end
 
   it "can subscribe" do
-    new_log = Object.new
+    new_log = StringIO.new
     logger.subscribe(new_log)
-    assert_includes internal_log.subscribers, new_log
+    assert_includes subscribers(internal_log), new_log
   end
 
   it "adds itself as logger instance" do
