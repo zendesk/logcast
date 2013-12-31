@@ -1,18 +1,4 @@
-require 'logger'
-
-class Logcast::Broadcaster < ::Logger
-  def initialize(io, *args)
-    if io.is_a?(Logger)
-      @logdev = io.instance_variable_get(:@logdev)
-
-      self.level = io.level
-      self.formatter = io.formatter
-      self.progname = io.progname
-    else
-      super
-    end
-  end
-
+class Logcast::Broadcaster
   def subscribe(subscriber, &block)
     unless subscriber.respond_to?(:add)
       original_subscriber = subscriber
@@ -40,22 +26,18 @@ class Logcast::Broadcaster < ::Logger
     @subscribers ||= []
   end
 
-  # Rails 3
-  def add(*args)
-    super
-    subscribers.each { |subscriber| subscriber.add(*args) }
-  end
-
-  # Rails 2
-  def write(msg)
-    self << msg
-    subscribers.each { |subscriber| subscriber.add(level, msg.rstrip, progname) }
+  def method_missing(name, *args, &block)
+    subscribers.each do |subscriber|
+      if subscriber.respond_to?(name)
+        subscriber.send(name, *args, &block)
+      end
+    end
   end
 
   private
 
   def already_subscribed?(logger)
-    subscribers.map { |s| log_device(s) }.include?(log_device(logger))
+    subscribers.map {|s| log_device(s)}.include?(log_device(logger))
   end
 
   def log_device(logger)
