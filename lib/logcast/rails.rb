@@ -2,7 +2,7 @@ require 'logcast'
 
 module Logcast
   class Railtie < Rails::Railtie
-    initializer 'logcast.initialize', :before => :initialize_logger do |app|
+    config.before_configuration do
       original = Rails.method(:logger=)
 
       Rails.define_singleton_method(:logger=) do |logger|
