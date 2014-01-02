@@ -27,17 +27,22 @@ class Logcast::Broadcaster
   end
 
   def method_missing(name, *args, &block)
+    responded = false
+
     subscribers.each do |subscriber|
       if subscriber.respond_to?(name)
+        responded = true
         subscriber.send(name, *args, &block)
       end
     end
+
+    super unless responded
   end
 
   private
 
   def already_subscribed?(logger)
-    subscribers.map {|s| log_device(s)}.include?(log_device(logger))
+    subscribers.map { |s| log_device(s) }.include?(log_device(logger))
   end
 
   def log_device(logger)

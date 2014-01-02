@@ -52,6 +52,16 @@ describe Logcast::Broadcaster do
       end
       assert_equal [], subscribers(broadcaster)
     end
+
+    it "raises NoMethodError if nothing responds" do
+      broadcaster.subscribe(stub)
+      lambda { broadcaster.notch }.must_raise(NoMethodError)
+    end
+
+    it "doesn't raise NoMethodError if something responds" do
+      broadcaster.subscribe(stub)
+      broadcaster.add(0, 'hi')
+    end
   end
 
   [:stringio, :logger, :buffered_logger].each do |type|
