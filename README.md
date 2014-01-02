@@ -1,6 +1,6 @@
 ## Logcast [![Build Status](https://travis-ci.org/zendesk/logcast.png)](https://travis-ci.org/zendesk/logcast)
 
-Log Broadcaster with support for Rails v2.3 -> v3.2
+Log Broadcaster with support for Rails >= v3.2
 
 ## Usage
 

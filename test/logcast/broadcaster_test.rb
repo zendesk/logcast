@@ -1,7 +1,7 @@
 require File.expand_path('../../test_helper', __FILE__)
 
 describe Logcast::Broadcaster do
-  let(:broadcaster){ Logcast::Broadcaster.new("/dev/null") }
+  let(:broadcaster){ Logcast::Broadcaster.new }
   let(:stub){ StringIO.new }
 
   describe "#subscribe" do
@@ -52,6 +52,16 @@ describe Logcast::Broadcaster do
       end
       assert_equal [], subscribers(broadcaster)
     end
+
+    it "raises NoMethodError if nothing responds" do
+      broadcaster.subscribe(stub)
+      lambda { broadcaster.notch }.must_raise(NoMethodError)
+    end
+
+    it "doesn't raise NoMethodError if something responds" do
+      broadcaster.subscribe(stub)
+      broadcaster.add(0, 'hi')
+    end
   end
 
   [:stringio, :logger, :buffered_logger].each do |type|
@@ -69,14 +79,6 @@ describe Logcast::Broadcaster do
       it "logs via add" do
         broadcaster.subscribe(logger)
         broadcaster.add(1, "hello")
-
-        recorder.string.must_include "hello"
-        recorder.string.wont_include "\n\n"
-      end
-
-      it "logs via write" do
-        broadcaster.subscribe(logger)
-        broadcaster.write("hello\n")
 
         recorder.string.must_include "hello"
         recorder.string.wont_include "\n\n"
