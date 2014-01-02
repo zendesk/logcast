@@ -2,12 +2,14 @@ module Logcast
   autoload :Broadcaster, 'logcast/broadcaster.rb'
 
   def self.engage!
-    original = Rails.method(:logger=)
+    class << Rails
+      alias_method(:old_logger=, :logger=)
 
-    Rails.define_singleton_method(:logger=) do |logger|
-      broadcast = Logcast::Broadcaster.new
-      broadcast.subscribe(logger)
-      original.call(broadcast)
+      def logger=(logger)
+        broadcast = Logcast::Broadcaster.new
+        broadcast.subscribe(logger)
+        self.old_logger = broadcast
+      end
     end
   end
 end
