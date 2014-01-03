@@ -4,6 +4,21 @@ describe Logcast::Broadcaster do
   let(:broadcaster){ Logcast::Broadcaster.new }
   let(:stub){ StringIO.new }
 
+  describe "#silence" do
+    let(:stub) { Logger.new(StringIO.new) }
+
+    before do
+      def stub.silence; @called = true; end
+
+      broadcaster.subscribe(stub)
+    end
+
+    it "passes silence through" do
+      broadcaster.silence
+      assert_equal true, stub.instance_variable_get(:@called)
+    end
+  end
+
   describe "#subscribe" do
     it "subscribes" do
       broadcaster.subscribe(stub)

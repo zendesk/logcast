@@ -1,4 +1,6 @@
 class Logcast::Broadcaster
+  undef_method :silence if defined?(silence)
+
   def subscribe(subscriber, &block)
     unless subscriber.respond_to?(:add)
       original_subscriber = subscriber
