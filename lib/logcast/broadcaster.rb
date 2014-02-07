@@ -35,14 +35,16 @@ class Logcast::Broadcaster
 
   def method_missing(name, *args, &block)
     responded = false
+    response  = nil
 
     subscribers.each do |subscriber|
       if subscriber.respond_to?(name)
-        responded = subscriber.send(name, *args, &block)
+        responded = true
+        response = subscriber.send(name, *args, &block)
       end
     end
 
-    responded || super
+    (responded)? response : super
   end
 
   private
