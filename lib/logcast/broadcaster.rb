@@ -9,7 +9,7 @@ class Logcast::Broadcaster
     end
 
     # Apply existing level to the new subscriber.
-    if(subscribers.any?)
+    if subscribers.any?
       subscriber.level = subscribers.first.level
     end
 
@@ -42,11 +42,7 @@ class Logcast::Broadcaster
       end
     end
 
-    if !responded
-      super
-    else
-      responded
-    end
+    responded || super
   end
 
   private
