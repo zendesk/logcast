@@ -8,6 +8,11 @@ class Logcast::Broadcaster
       subscriber.instance_variable_set(:@logcast_original_subscriber, original_subscriber)
     end
 
+    # Apply existing level to the new subscriber.
+    if(subscribers.any?)
+      subscriber.level = subscribers.first.level
+    end
+
     if block
       if already_subscribed?(subscriber)
         yield
@@ -33,12 +38,15 @@ class Logcast::Broadcaster
 
     subscribers.each do |subscriber|
       if subscriber.respond_to?(name)
-        responded = true
-        subscriber.send(name, *args, &block)
+        responded = subscriber.send(name, *args, &block)
       end
     end
 
-    super unless responded
+    if !responded
+      super
+    else
+      responded
+    end
   end
 
   private
