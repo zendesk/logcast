@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "logcast"
-  s.version     = "1.0.2"
+  s.version     = "1.0.3"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Steven Davidovitz", "Michael Grosser"]
   s.email       = ["support@zendesk.com"]
