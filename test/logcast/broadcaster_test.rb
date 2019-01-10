@@ -133,6 +133,16 @@ describe Logcast::Broadcaster do
       stub1.string.wont_include "hello"
       stub1.string.must_include "warning you!"
     end
+
+    it "overrides Kernel#warn" do
+      logger.level = Logger::WARN
+
+      broadcaster.subscribe(stub1)
+
+      broadcaster.send(:warn, "warning you!")
+
+      stub1.string.must_include "warning you!"
+    end
   end
 
   [:stringio, :logger, :buffered_logger].each do |type|
