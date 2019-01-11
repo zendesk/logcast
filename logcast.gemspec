@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.email       = ["support@zendesk.com"]
   s.homepage    = "http://developer.zendesk.com"
   s.summary     = %q{Log Broadcaster}
-  s.description = %q{Broadcasts logs, including support for Rails version 2.3 through 3.2.}
+  s.description = %q{Broadcasts logs, including support for Rails version 4.2.}
   s.license = 'Apache License Version 2.0'
 
   s.required_ruby_version     = ">= 1.8.7"

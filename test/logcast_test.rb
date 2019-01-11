@@ -25,7 +25,7 @@ describe Logcast do
       io2 = StringIO.new
 
       Logcast.engage!
-      Rails.logger = ActiveSupport::BufferedLogger.new(Fake.io)
+      Rails.logger = Logger.new(Fake.io)
       Rails.logger.subscribe(io2)
       Rails.logger.info("foo")
 

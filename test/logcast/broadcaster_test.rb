@@ -145,14 +145,13 @@ describe Logcast::Broadcaster do
     end
   end
 
-  [:stringio, :logger, :buffered_logger].each do |type|
+  [:stringio, :logger].each do |type|
     describe "logging to #{type}" do
       let(:recorder) { StringIO.new }
       let(:stub_logger) do
         case type
         when :stringio then recorder
         when :logger then Logger.new(recorder)
-        when :buffered_logger then ActiveSupport::BufferedLogger.new(recorder)
         else raise "Unsupported #{type}"
         end
       end
