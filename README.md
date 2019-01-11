@@ -24,10 +24,11 @@ logs = my_custom_stream.string
 
 ```ruby
 require 'logcast'
-broadcaster = Logcast::Broadcaster.new(STDOUT)
+require 'logger'
+broadcaster = Logcast::Broadcaster.new
 broadcaster.subscribe(Logger.new(STDERR))
 
-broadcast.info("Hi!")
+broadcaster.info("Hi!")
 ```
 
 ## Copyright and license
