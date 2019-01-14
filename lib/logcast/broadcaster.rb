@@ -42,6 +42,11 @@ class Logcast::Broadcaster
     end
   end
 
+  # Kernel#warn is defined by Ruby
+  def warn(*args, &block)
+    method_missing("warn", *args, &block)
+  end
+
   def respond_to?(*args)
     subscribers.any?{|s| s.respond_to?(*args) } || super
   end

@@ -7,6 +7,6 @@ gem "minitest-rg"
 gem "appraisal", "~> 0.5"
 gem "debugger", :platforms=>[:ruby_20]
 gem "bump"
-gem "rails", "~> 3.2.0"
+gem "rails", "~> 4.2.11"
 
 gemspec :path=>"../"

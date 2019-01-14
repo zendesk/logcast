@@ -6,7 +6,7 @@ require 'minitest/rg'
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 
 require 'logcast'
-require 'active_support/buffered_logger'
+require 'logger'
 require 'active_support/version'
 
 # For Kernel#silence
