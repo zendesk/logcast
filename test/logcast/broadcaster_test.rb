@@ -78,16 +78,6 @@ describe Logcast::Broadcaster do
       broadcaster.add(0, 'hi')
     end
 
-    it "respond_to? returns false if nothing responds" do
-      broadcaster.subscribe(stub1)
-      refute broadcaster.respond_to?(:foo)
-    end
-
-    it "respond_to? returns true if something responds" do
-      broadcaster.subscribe(stub1)
-      assert broadcaster.respond_to?(:level)
-    end
-
     it "returns level correctly" do
       logger.level = Logger::DEBUG
       broadcaster.subscribe(logger)

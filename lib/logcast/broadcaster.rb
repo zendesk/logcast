@@ -47,10 +47,6 @@ class Logcast::Broadcaster
     method_missing("warn", *args, &block)
   end
 
-  def respond_to?(*args)
-    subscribers.any?{|s| s.respond_to?(*args) } || super
-  end
-
   private
 
   def already_subscribed?(logger)
