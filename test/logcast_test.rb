@@ -29,8 +29,8 @@ describe Logcast do
       Rails.logger.subscribe(io2)
       Rails.logger.info("foo")
 
-      Fake.io.string.must_include "foo"
-      io2.string.must_include "foo"
+      assert_includes(Fake.io.string, "foo")
+      assert_includes(io2.string, "foo")
     end
   end
 end

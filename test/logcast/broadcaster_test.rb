@@ -70,7 +70,7 @@ describe Logcast::Broadcaster do
 
     it "raises NoMethodError if nothing responds" do
       broadcaster.subscribe(stub1)
-      lambda { broadcaster.notch }.must_raise(NoMethodError)
+      assert_raises(NoMethodError) { broadcaster.notch }
     end
 
     it "doesn't raise NoMethodError if something responds" do
@@ -120,8 +120,8 @@ describe Logcast::Broadcaster do
       broadcaster.debug("hello")
       broadcaster.warn("warning you!")
 
-      stub1.string.wont_include "hello"
-      stub1.string.must_include "warning you!"
+      refute_includes(stub1.string, "hello")
+      assert_includes(stub1.string, "warning you!")
     end
 
     it "overrides Kernel#warn" do
@@ -131,7 +131,7 @@ describe Logcast::Broadcaster do
 
       broadcaster.send(:warn, "warning you!")
 
-      stub1.string.must_include "warning you!"
+      assert_includes(stub1.string, "warning you!")
     end
   end
 
@@ -150,8 +150,8 @@ describe Logcast::Broadcaster do
         broadcaster.subscribe(stub_logger)
         broadcaster.add(1, "hello")
 
-        recorder.string.must_include "hello"
-        recorder.string.wont_include "\n\n"
+        assert_includes(recorder.string, "hello")
+        refute_includes(recorder.string, "\n\n")
       end
     end
   end
