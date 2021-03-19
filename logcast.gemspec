@@ -1,10 +1,11 @@
+require_relative 'lib/logcast/version'
+
 Gem::Specification.new do |s|
   s.name        = "logcast"
-  s.version     = "1.2.0"
-  s.platform    = Gem::Platform::RUBY
+  s.version     = Logcast::VERSION
   s.authors     = ["Steven Davidovitz", "Michael Grosser"]
   s.email       = ["support@zendesk.com"]
-  s.homepage    = "http://developer.zendesk.com"
+  s.homepage    = "https://github.com/zendesk/logcast"
   s.summary     = %q{Log Broadcaster}
   s.description = %q{Broadcasts logs, including support for Rails version 4.2.}
   s.license = 'Apache License Version 2.0'
