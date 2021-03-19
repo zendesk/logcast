@@ -11,7 +11,6 @@ Gem::Specification.new do |s|
   s.license = 'Apache License Version 2.0'
 
   s.required_ruby_version     = ">= 1.8.7"
-  s.required_rubygems_version = ">= 1.3.6"
 
   s.add_dependency "activesupport"
 
