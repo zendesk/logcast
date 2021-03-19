@@ -58,6 +58,10 @@ class Logcast::Broadcaster
   end
 
   def log_device(logger)
-    logger.instance_variable_get(:@logcast_original_subscriber) || logger
+    if logger.instance_variable_defined?(:@logcast_original_subscriber)
+      logger.instance_variable_get(:@logcast_original_subscriber)
+    else
+      logger
+    end
   end
 end
