@@ -1,7 +1,7 @@
 require 'bundler/setup'
 require 'bump/tasks'
 require 'rake/testtask'
-require 'bundler/gem_tasks'
+require 'bundler/gem_tasks' unless defined?(Bundler::GemfileError) # Workaround for https://github.com/thoughtbot/appraisal/issues/173
 require 'appraisal'
 
 task :default => ['test']
