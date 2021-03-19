@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.description = %q{Broadcasts logs, including support for Rails version 4.2.}
   s.license = 'Apache License Version 2.0'
 
-  s.required_ruby_version     = ">= 1.8.7"
+  s.required_ruby_version     = ">= 2.5.0"
 
   s.add_dependency "activesupport"
 

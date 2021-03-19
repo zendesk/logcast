@@ -6,6 +6,9 @@ and as of v1.0.0 this project adheres to [Semantic Versioning](https://semver.or
 
 ## [Unreleased]
 
-## <= [1.1.1]
+### Removed
+ - Drop support for Ruby < 2.5 (https://github.com/zendesk/logcast/pull/12)
+
+## <= [1.2.0]
 
 Unwritten
