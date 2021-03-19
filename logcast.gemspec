@@ -1,10 +1,9 @@
 Gem::Specification.new do |s|
   s.name        = "logcast"
   s.version     = "1.1.1"
-  s.platform    = Gem::Platform::RUBY
   s.authors     = ["Steven Davidovitz", "Michael Grosser"]
   s.email       = ["support@zendesk.com"]
-  s.homepage    = "http://developer.zendesk.com"
+  s.homepage    = "https://github.com/zendesk/logcast"
   s.summary     = %q{Log Broadcaster}
   s.description = %q{Broadcasts logs, including support for Rails version 4.2.}
   s.license = 'Apache License Version 2.0'
