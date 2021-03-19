@@ -13,8 +13,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version     = ">= 1.8.7"
   s.required_rubygems_version = ">= 1.3.6"
 
-  s.add_development_dependency "rake"
-  s.add_development_dependency "activesupport"
+  s.add_dependency "activesupport"
 
   s.files              = Dir["lib/**/*.rb"]
   s.require_paths      = ["lib"]
