@@ -8,6 +8,6 @@ gem "appraisal"
 gem "debugger", platforms: [:ruby_20]
 gem "bump"
 gem "rake"
-gem "activesupport", "~> 4.2.11"
+gem "activesupport", "~> 5.0", "< 5.1"
 
 gemspec path: "../"
