@@ -1,23 +1,19 @@
-appraise "rails-4.2" do
-  gem "activesupport", "~> 4.2.11"
+appraise "rails-4" do
+  gem "activesupport", "~> 4"
 end
 
-appraise "rails-5.0" do
-  gem "activesupport", "~> 5.0", "< 5.1"
+appraise "rails-5" do
+  gem "activesupport", "~> 5"
 end
 
-appraise "rails-5.1" do
-  gem "activesupport", "~> 5.1", "< 5.2"
+appraise "rails-6" do
+  gem "activesupport", "~> 6"
 end
 
-appraise "rails-5.2" do
-  gem "activesupport", "~> 5.2"
+appraise "rails-7" do
+  gem "activesupport", "~> 7"
 end
 
-appraise "rails-6.0" do
-  gem "activesupport", "~> 6.0", "< 6.1"
-end
-
-appraise "rails-6.1" do
-  gem "activesupport", "~> 6.1"
+appraise "rails-8" do
+  gem "activesupport", "~> 8"
 end
