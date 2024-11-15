@@ -31,6 +31,13 @@ broadcaster.subscribe(Logger.new(STDERR))
 broadcaster.info("Hi!")
 ```
 
+## Testing
+
+```
+bundle exec appraisal install # install the deps
+bundle exec appraisal rake # run the tests across each 'appraisal'
+```
+
 ## Copyright and license
 
 Copyright 2013 Zendesk

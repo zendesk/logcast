@@ -1,3 +1,5 @@
+require_relative 'logcast/version'
+
 module Logcast
   autoload :Broadcaster, 'logcast/broadcaster.rb'
 
