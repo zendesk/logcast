@@ -17,3 +17,7 @@ end
 appraise "rails-8" do
   gem "activesupport", "~> 8"
 end
+
+appraise "rails-main" do
+  gem "activesupport", github: "rails"
+end
