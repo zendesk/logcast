@@ -1,4 +1,4 @@
-## Logcast [![Build Status](https://travis-ci.org/zendesk/logcast.png)](https://travis-ci.org/zendesk/logcast)
+## Logcast [![Build Status](https://github.com/zendesk/logcast/actions/workflows/ci.yml/badge.svg)](https://github.com/zendesk/logcast/actions/workflows/ci.yml)
 
 Log Broadcaster with support for Rails >= v4.2
 
